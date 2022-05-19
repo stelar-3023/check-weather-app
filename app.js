@@ -30,4 +30,9 @@ request({ url: url, json: true }, (error, response) => {
 
 // Geocoding
 // Address -> Lat/Long -> Weather
+const geocodeURL =
+  'https://api.mapbox.com/geocoding/v5/mapbox.places/Nashville.json?access_token=pk.eyJ1Ijoic2xhcnNlbi0zIiwiYSI6ImNsM2M0bHQyaTAwaTMzZXFpaTR3MDM5MmQifQ.7S7dvjAiXY5pcaAvQeN92w&limit=1';
 
+request({ url: geocodeURL, json: true }, (error, response) => {
+  console.log(response.body.features[0].center);
+});
