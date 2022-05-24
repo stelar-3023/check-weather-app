@@ -1,20 +1,27 @@
-// console.log('Starting');
-
-// setTimeout(() => {
-//   console.log('2 second timer');
-// }, 2000);
-
-// setTimeout(() => {
-//   console.log('0 second timer');
-// }, 0);
-
-// console.log('Stopping');
-
-// Call Stack => Node APIs => Event Loop => Callback Queue
-
-const request = require('request');
+// const request = require('request');
 const geocode = require('./utils/geocode');
 const forecast = require('./utils/forecast');
+
+const address = process.argv[2];
+
+if (!address) {
+  console.log('Please provide an address');
+} else {
+  geocode(address, (error, { latitude, longitude, location }) => {
+    if (error) {
+      return console.log(error);
+    }
+
+    forecast(latitude, longitude, (error, forecastData) => {
+      if (error) {
+        return console.log(error);
+      }
+
+      console.log(location);
+      console.log(forecastData);
+    });
+  });
+}
 
 // const url =
 //   'http://api.weatherstack.com/current?access_key=1b37b5aa71d040e6e7ad3b8f0f8f01cf&query=37.8267,-122.4233&units=f';
@@ -75,12 +82,6 @@ const forecast = require('./utils/forecast');
 //   })
 // }
 
-// geocode('Boston', (error, data) => {
-//   console.log('Error', error)
-//   console.log('Data', data)
-// })
-
-
 // const forecast = (latitude, longitude, callback) => {
 //   const url = 'http://api.weatherstack.com/current?access_key=1b37b5aa71d040e6e7ad3b8f0f8f01cf&query=' + latitude + ',' + longitude + '&units=f'
 
@@ -94,8 +95,3 @@ const forecast = require('./utils/forecast');
 //     }
 //   })
 // }
-
-forecast(18.5601, 68.3725, (error, data) => {
-  console.log('Error', error)
-  console.log('Data', data)
-})
